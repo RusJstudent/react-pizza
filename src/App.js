@@ -1,45 +1,20 @@
-import { useState, useEffect } from "react";
 import Header from "./components/Header";
-import Categories from "./components/Categories";
-import Sort from "./components/Sort";
-import PizzaBlock from "./components/PizzaBlock";
-import Skeleton from "./components/PizzaBlock/Skeleton";
+import { Routes, Route } from 'react-router-dom';
+import Home from "./pages/Home";
+import Cart from "./pages/Cart";
+import NotFound from "./pages/NotFound";
 import "./scss/app.scss";
 
-const serverUrl = 'https://666d611e7a3738f7cacc3aa7.mockapi.io';
-
 export default function App() {
-    const [isLoading, setIsLoading] = useState(true);
-    const [pizzas, setPizzas] = useState([]);
-
-    useEffect(() => {
-        // setTimeout(() => {
-        // }, 2000)
-        fetch(`${serverUrl}/items`)
-            .then(response => response.json())
-            .then(data => {
-                setPizzas(data);
-                setIsLoading(false);
-            })
-    }, []);
-
     return (
         <div className="wrapper">
             <Header />
             <div className="content">
-                <div className="container">
-                    <div className="content__top">
-                        <Categories />
-                        <Sort />
-                    </div>
-                    <h2 className="content__title">Все пиццы</h2>
-                    <div className="content__items">
-                        {isLoading
-                            ? Array(10).fill(null).map((_, idx) => <Skeleton key={idx} />)
-                            : pizzas.map(pizza => <PizzaBlock key={pizza.id} {...pizza} />)
-                        }
-                    </div>
-                </div>
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/cart" element={<Cart />} />
+                    <Route path="*" element={<NotFound />} />
+                </Routes>
             </div>
         </div>
     );

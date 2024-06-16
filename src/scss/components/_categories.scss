@@ -3,12 +3,19 @@
 .categories {
   ul {
     display: flex;
-
+    column-gap: 10px;
+    overflow: auto;
     li {
+      flex: 0 1 auto;
+      @media (max-width: 767px) {
+        flex: 1 1 auto;
+      }
+      @media (max-width: 440px) {
+        flex: 1 1 100%;
+      }
       background-color: #f9f9f9;
       padding: 13px 30px;
       border-radius: 30px;
-      margin-right: 10px;
       font-weight: bold;
       cursor: pointer;
       transition: background-color 0.1s ease-in-out;
