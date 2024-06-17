@@ -1,10 +1,10 @@
-import { HomeContext } from "../context/HomeContext";
 import { useContext } from "react"
+import { AppContext } from "../context/AppContext";
 
 const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
 
 export default function Categories() {
-    const { category, onChangeCategory } = useContext(HomeContext);
+    const { category, onChangeCategory } = useContext(AppContext);
 
     return (
         <div className="categories">

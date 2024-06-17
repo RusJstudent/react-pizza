@@ -1,6 +1,6 @@
 import classes from './NotFoundBlock.module.scss';
 
-export default function NotFoundBlock() {
+export default function NotFoundBlock({ text }) {
     return (
         <div className={classes.root}>
             <h1>
@@ -8,7 +8,7 @@ export default function NotFoundBlock() {
                 <br />
                 Ничего не найдено
             </h1>
-            <p className={classes.description}>К сожалению, данная страница отсутствует в нашем интернет-магазине.</p>
+            <p className={classes.description}>{text}</p>
         </div>
     )
 };

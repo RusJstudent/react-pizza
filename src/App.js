@@ -1,22 +1,48 @@
-import Header from "./components/Header";
+import { useState } from "react";
 import { Routes, Route } from 'react-router-dom';
+
+import { AppContext } from "./context/AppContext";
+
+import Header from "./components/Header";
 import Home from "./pages/Home";
 import Cart from "./pages/Cart";
 import NotFound from "./pages/NotFound";
+
 import "./scss/app.scss";
 
+const sortTypes = [
+    { name: 'популярности', field: 'rating', order: 'desc' },
+    { name: 'цене 🠅', field: 'price', order: 'asc' },
+    { name: 'цене 🠇', field: 'price', order: 'desc' },
+    { name: 'алфавиту', field: 'title', order: 'asc' },
+];
+
 export default function App() {
+    const [category, setCategory] = useState(0);
+    const [sortType, setSortType] = useState(sortTypes[0]);
+    const [searchInput, setSearchInput] = useState('');
+
+    function onChangeCategory(idx) {
+        setCategory(idx);
+    }
+
+    function onChangeSortType(type) {
+        setSortType(type);
+    }
+
     return (
-        <div className="wrapper">
-            <Header />
-            <div className="content">
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/cart" element={<Cart />} />
-                    <Route path="*" element={<NotFound />} />
-                </Routes>
+        <AppContext.Provider value={{ category, sortType, sortTypes, onChangeCategory, onChangeSortType, searchInput, setSearchInput }}>
+            <div className="wrapper">
+                <Header />
+                <div className="content">
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/cart" element={<Cart />} />
+                        <Route path="*" element={<NotFound />} />
+                    </Routes>
+                </div>
             </div>
-        </div>
+        </AppContext.Provider>
     );
 }
 

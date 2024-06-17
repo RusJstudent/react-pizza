@@ -1,24 +1,21 @@
-import { useState, useEffect, useLayoutEffect } from "react";
-import { HomeContext } from "../context/HomeContext";
+import { useState, useEffect, useLayoutEffect, useContext } from "react";
+
+import { AppContext } from "../context/AppContext";
+
 import Categories from "../components/Categories"
 import Sort from "../components/Sort"
 import Skeleton from "../components/PizzaBlock/Skeleton"
 import PizzaBlock from "../components/PizzaBlock"
+import NotFoundBlock from "../components/NotFoundBlock";
 
 const serverUrl = 'https://666d611e7a3738f7cacc3aa7.mockapi.io';
-
-const sortTypes = [
-    {name: 'популярности', field: 'rating', order: 'desc'},
-    {name: 'цене 🠅', field: 'price', order: 'asc'},
-    {name: 'цене 🠇', field: 'price', order: 'desc'},
-    {name: 'алфавиту', field: 'title', order: 'asc'},
-];
 
 export default function Home() {
     const [isLoading, setIsLoading] = useState(true);
     const [pizzas, setPizzas] = useState([]);
-    const [category, setCategory] = useState(0);
-    const [sortType, setSortType] = useState(sortTypes[0]);
+    const { category, sortType, searchInput } = useContext(AppContext);
+
+    const filteredPizzas = pizzas.filter(pizza => pizza.title.toLowerCase().includes(searchInput.toLowerCase()));
 
     useLayoutEffect(() => {
         window.scrollTo(window.scrollX, 0);
@@ -41,29 +38,24 @@ export default function Home() {
             });
     }, [category, sortType]);
 
-    function onChangeCategory(idx) {
-        setCategory(idx);
-    }
-
-    function onChangeSortType(type) {
-        setSortType(type);
-    }
-
     return (
-        <HomeContext.Provider value={{ category, sortType, onChangeCategory, onChangeSortType }}>
-            <div className="container">
-                <div className="content__top">
-                    <Categories />
-                    <Sort sortTypes={sortTypes} />
-                </div>
-                <h2 className="content__title">Все пиццы</h2>
-                <div className="content__items">
-                    {isLoading
-                        ? Array(8).fill(null).map((_, idx) => <Skeleton key={idx} />)
-                        : pizzas.map(pizza => <PizzaBlock key={pizza.id} {...pizza} />)
-                    }
-                </div>
+        <div className="container">
+            <div className="content__top">
+                <Categories />
+                <Sort />
             </div>
-        </HomeContext.Provider>
+            <h2 className="content__title">Все пиццы</h2>
+            {!isLoading && !filteredPizzas.length
+                ? <NotFoundBlock text="К сожалению, таких пицц у нас нет..." />
+                : (
+                    <div className="content__items">
+                        {isLoading
+                            ? Array(8).fill(null).map((_, idx) => <Skeleton key={idx} />)
+                            : filteredPizzas.map(pizza => <PizzaBlock key={pizza.id} {...pizza} />)
+                        }
+                    </div>
+                )
+            }
+        </div>
     )
 };

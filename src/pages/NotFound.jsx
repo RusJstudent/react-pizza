@@ -3,7 +3,7 @@ import NotFoundBlock from "../components/NotFoundBlock"
 export default function NotFound() {
     return (
         <>
-            <NotFoundBlock />
+            <NotFoundBlock text="К сожалению, данная страница отсутствует в нашем интернет-магазине." />
         </>
     )
 };
