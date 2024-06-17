@@ -1,13 +1,13 @@
 import { useState } from "react"
+import { HomeContext } from "../context/HomeContext"
+import { useContext } from "react"
 
-const sortTypes = ['популярности', 'цене', 'алфавиту'];
-
-export default function Sort() {
+export default function Sort({ sortTypes }) {
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedType, setSelectedType] = useState(0);
+    const {sortType, onChangeSortType} = useContext(HomeContext);
 
     function handleTypeChange(idx) {
-        setSelectedType(idx);
+        onChangeSortType(idx);
         setIsOpen(false);
     }
 
@@ -27,7 +27,7 @@ export default function Sort() {
                     />
                 </svg>
                 <b>Сортировка по:</b>
-                <span onClick={() => setIsOpen(!isOpen)}>{sortTypes[selectedType]}</span>
+                <span onClick={() => setIsOpen(!isOpen)}>{sortType.name}</span>
             </div>
             {isOpen && (
                 <div className="sort__popup">
@@ -35,10 +35,10 @@ export default function Sort() {
                         {sortTypes.map((type, idx) => (
                             <li
                                 key={idx}
-                                className={selectedType === idx ? 'active' : ''}
-                                onClick={() => handleTypeChange(idx)}
+                                className={sortType.name === type.name ? 'active' : ''}
+                                onClick={() => handleTypeChange(type)}
                             >
-                                {type}
+                                {type.name}
                             </li>
                         ))}
                     </ul>

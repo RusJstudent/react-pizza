@@ -1,20 +1,21 @@
-import { useState } from "react"
+import { HomeContext } from "../context/HomeContext";
+import { useContext } from "react"
 
 const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
 
 export default function Categories() {
-    const [activeIndex, setActiveIndex] = useState(0);
+    const { category, onChangeCategory } = useContext(HomeContext);
 
     return (
         <div className="categories">
             <ul>
-                {categories.map((category, idx) => (
+                {categories.map((name, idx) => (
                     <li
                         key={idx}
-                        className={activeIndex === idx ? 'active' : ''}
-                        onClick={() => setActiveIndex(idx)}
+                        className={category === idx ? 'active' : ''}
+                        onClick={() => onChangeCategory(idx)}
                     >
-                        {category}
+                        {name}
                     </li>
                 ))}
             </ul>

@@ -42,7 +42,7 @@ pizzas.json:
             40
         ],
         "price": 803,
-        "category": 0,
+        "category": 3,
         "rating": 4
     },
     {
@@ -57,7 +57,7 @@ pizzas.json:
             40
         ],
         "price": 245,
-        "category": 0,
+        "category": 3,
         "rating": 6
     },
     {
