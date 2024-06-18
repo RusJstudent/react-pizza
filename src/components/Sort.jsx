@@ -1,12 +1,10 @@
-import { useState, useContext } from "react"
-import { AppContext } from "../context/AppContext"
+import { useState } from "react"
 
-export default function Sort() {
+export default function Sort({ sortTypes, sortType, onChange }) {
     const [isOpen, setIsOpen] = useState(false);
-    const { sortTypes, sortType, onChangeSortType } = useContext(AppContext);
 
     function handleTypeChange(idx) {
-        onChangeSortType(idx);
+        onChange(idx);
         setIsOpen(false);
     }
 

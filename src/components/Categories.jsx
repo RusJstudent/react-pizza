@@ -1,11 +1,6 @@
-import { useContext } from "react"
-import { AppContext } from "../context/AppContext";
-
 const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
 
-export default function Categories() {
-    const { category, onChangeCategory } = useContext(AppContext);
-
+export default function Categories({ category, onChange }) {
     return (
         <div className="categories">
             <ul>
@@ -13,7 +8,7 @@ export default function Categories() {
                     <li
                         key={idx}
                         className={category === idx ? 'active' : ''}
-                        onClick={() => onChangeCategory(idx)}
+                        onClick={() => onChange(idx)}
                     >
                         {name}
                     </li>

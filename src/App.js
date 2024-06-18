@@ -10,28 +10,11 @@ import NotFound from "./pages/NotFound";
 
 import "./scss/app.scss";
 
-const sortTypes = [
-    { name: 'популярности', field: 'rating', order: 'desc' },
-    { name: 'цене 🠅', field: 'price', order: 'asc' },
-    { name: 'цене 🠇', field: 'price', order: 'desc' },
-    { name: 'алфавиту', field: 'title', order: 'asc' },
-];
-
 export default function App() {
-    const [category, setCategory] = useState(0);
-    const [sortType, setSortType] = useState(sortTypes[0]);
     const [searchInput, setSearchInput] = useState('');
 
-    function onChangeCategory(idx) {
-        setCategory(idx);
-    }
-
-    function onChangeSortType(type) {
-        setSortType(type);
-    }
-
     return (
-        <AppContext.Provider value={{ category, sortType, sortTypes, onChangeCategory, onChangeSortType, searchInput, setSearchInput }}>
+        <AppContext.Provider value={{ searchInput, setSearchInput }}>
             <div className="wrapper">
                 <Header />
                 <div className="content">
