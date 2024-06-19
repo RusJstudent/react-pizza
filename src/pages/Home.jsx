@@ -1,5 +1,7 @@
 import { useState, useEffect, useLayoutEffect, useContext } from "react";
 
+import { useSelector } from "react-redux";
+
 import { AppContext } from "../context/AppContext";
 import Categories from "../components/Categories"
 import Sort from "../components/Sort"
@@ -11,20 +13,14 @@ import Pagination from "../components/Pagination";
 const serverUrl = 'https://666d611e7a3738f7cacc3aa7.mockapi.io';
 const limit = 8;
 
-const sortTypes = [
-    { name: 'популярности', field: 'rating', order: 'desc' },
-    { name: 'цене 🠅', field: 'price', order: 'asc' },
-    { name: 'цене 🠇', field: 'price', order: 'desc' },
-    { name: 'алфавиту', field: 'title', order: 'asc' },
-];
-
 export default function Home() {
     const [isLoading, setIsLoading] = useState(true);
     const [pizzas, setPizzas] = useState([]);
     const [page, setPage] = useState(1);
-    const [category, setCategory] = useState(0);
-    const [sortType, setSortType] = useState(sortTypes[0]);
+
     const { searchInput } = useContext(AppContext);
+    
+    const { category, sortType } = useSelector(state => state.filter);
 
     const filteredPizzas = pizzas.filter(pizza => pizza.title.toLowerCase().includes(searchInput.toLowerCase())); // работает только фильтрация текущей страницы
 
@@ -51,19 +47,11 @@ export default function Home() {
             });
     }, [category, sortType, page]);
 
-    function onChangeCategory(idx) {
-        setCategory(idx);
-    }
-
-    function onChangeSortType(type) {
-        setSortType(type);
-    }
-
     return (
         <div className="container">
             <div className="content__top">
-                <Categories category={category} onChange={onChangeCategory} />
-                <Sort sortType={sortType} onChange={onChangeSortType} sortTypes={sortTypes} />
+                <Categories />
+                <Sort />
             </div>
             <h2 className="content__title">Все пиццы</h2>
             {!isLoading && !filteredPizzas.length

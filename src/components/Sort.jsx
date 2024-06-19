@@ -1,10 +1,23 @@
 import { useState } from "react"
 
-export default function Sort({ sortTypes, sortType, onChange }) {
-    const [isOpen, setIsOpen] = useState(false);
+import { useSelector, useDispatch } from "react-redux";
+import { setSortType } from "../redux/slices/filterSlice";
 
-    function handleTypeChange(idx) {
-        onChange(idx);
+export const sortTypes = [
+    { name: 'популярности', field: 'rating', order: 'desc' },
+    { name: 'цене 🠅', field: 'price', order: 'asc' },
+    { name: 'цене 🠇', field: 'price', order: 'desc' },
+    { name: 'алфавиту', field: 'title', order: 'asc' },
+];
+
+export default function Sort() {
+    const [isOpen, setIsOpen] = useState(false);
+    
+    const dispatch = useDispatch();
+    const sortType = useSelector(state => state.filter.sortType);
+
+    function handleTypeChange(type) {
+        dispatch(setSortType(type));
         setIsOpen(false);
     }
 
