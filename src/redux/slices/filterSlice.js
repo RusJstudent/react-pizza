@@ -21,7 +21,7 @@ function getInitialState() {
   };
 }
 
-export const filterSlice = createSlice({
+const filterSlice = createSlice({
   name: 'filter',
   initialState: getInitialState(),
   reducers: {
@@ -35,9 +35,7 @@ export const filterSlice = createSlice({
       state.page = action.payload;
     },
   },
-})
+});
 
-export const { setCategory, setSortType, setPage } = filterSlice.actions
-export default filterSlice.reducer
-
-
+export const { setCategory, setSortType, setPage } = filterSlice.actions;
+export default filterSlice.reducer;
