@@ -1,6 +1,9 @@
 import { useState, useEffect, useLayoutEffect, useContext } from "react";
+
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import qs from 'qs';
 
 import { AppContext } from "../context/AppContext";
 import Categories from "../components/Categories"
@@ -20,15 +23,15 @@ const limit = 8;
 export default function Home() {
     const [isLoading, setIsLoading] = useState(true);
     const [pizzas, setPizzas] = useState([]);
-    const [page, setPage] = useState(1);
 
     const { searchInput } = useContext(AppContext);
-    
-    const { category, sortType } = useSelector(state => state.filter);
+    const { category, sortType, page } = useSelector(state => state.filter);
+
+    const navigave = useNavigate();
 
     useLayoutEffect(() => {
         window.scrollTo(window.scrollX, 0);
-    }, []);
+    }, [category, sortType, page]);
 
     useEffect(() => {
         setIsLoading(true);
@@ -49,8 +52,17 @@ export default function Home() {
                 setPizzas([]);
             })
             .finally(() => setIsLoading(false));
-
     }, [category, sortType, page, searchInput]);
+
+    useEffect(() => {
+        const queryString = qs.stringify({
+            sortType,
+            category,
+            page,
+        });
+
+        navigave(`?${queryString}`);
+    }, [category, sortType, page]);
 
     return (
         <div className="container">
@@ -70,7 +82,7 @@ export default function Home() {
                     </div>
                 )
             }
-            <Pagination onChange={setPage} />
+            <Pagination />
         </div>
     )
 };
