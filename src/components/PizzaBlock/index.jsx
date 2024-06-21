@@ -1,5 +1,6 @@
 import { useState } from "react"
 
+import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { addItem, selectItemsCountById } from '../../redux/slices/cartSlice';
 
@@ -15,10 +16,10 @@ export default function PizzaBlock({ title, price, imageUrl, sizes, types, id })
     function addToCart() {
         dispatch(addItem({
             id,
-            title, 
-            price, 
+            title,
+            price,
             imageUrl,
-            type: typeNames[activeType], 
+            type: typeNames[activeType],
             size: sizes[activeSize],
             paramId: `${id}-${activeType}-${activeSize}`,
         }));
@@ -26,12 +27,14 @@ export default function PizzaBlock({ title, price, imageUrl, sizes, types, id })
 
     return (
         <div className="pizza-block">
-            <img
-                className="pizza-block__image"
-                src={"https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"}
-                alt="Pizza"
-            />
-            <h4 className="pizza-block__title">{title}</h4>
+            <Link to={`/pizza/${id}`}>
+                <img
+                    className="pizza-block__image"
+                    src={"https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"}
+                    alt="Pizza"
+                />
+                <h4 className="pizza-block__title">{title}</h4>
+            </Link>
             <div className="pizza-block__selector">
                 <ul>
                     {types.map((type, idx) => (

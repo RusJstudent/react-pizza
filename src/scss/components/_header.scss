@@ -19,10 +19,14 @@
       & > *:first-child {
         flex: 1 0 100%;
       }
+
+      & > *:nth-child(2).header__cart {
+        margin-left: auto;
+      }
     }
 
     @media (max-width: 670px) {
-      & > *:nth-child(2) {
+      & > *:nth-child(2):not(.header__cart) {
         order: 3;
         width: 100%;
       }

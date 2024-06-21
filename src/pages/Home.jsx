@@ -16,7 +16,7 @@ import Pagination from "../components/Pagination";
     const url = `${serverUrl}/items?${category === 0 ? '' : `category=${category}`}&sortBy=${sortType.field}&order=${sortType.order}`; 
 */
 
-const serverUrl = 'https://666d611e7a3738f7cacc3aa7.mockapi.io';
+export const serverUrl = 'https://666d611e7a3738f7cacc3aa7.mockapi.io';
 const limit = 8;
 
 export default function Home() {
