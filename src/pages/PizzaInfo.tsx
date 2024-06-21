@@ -5,9 +5,19 @@ import axios from "axios";
 
 import { serverUrl } from "./Home";
 
+interface IPizza {
+    id: string
+    imageUrl: string
+    title: string
+    types: number[]
+    sizes: number[]
+    price: number
+    category: number
+    rating: number
+}
+
 export default function PizzaInfo() {
-    const [isLoading, setIsLoading] = useState(true);
-    const [pizza, setPizza] = useState(null);
+    const [pizza, setPizza] = useState<IPizza>();
 
     const { id } = useParams();
     const navigate = useNavigate();
@@ -16,15 +26,14 @@ export default function PizzaInfo() {
         axios.get(`${serverUrl}/items/${id}`)
             .then(response => {
                 setPizza(response.data);
-                setIsLoading(false);
             })
             .catch(err => {
                 alert('Ошибка при получении пиццы..');
                 navigate('/');
             })
-    }, [id, navigate]);
+    }, []);
 
-    if (isLoading) {
+    if (!pizza) {
         return (
             <div className="container">
                 <h2 className="content__title">Загрузка...</h2>
