@@ -1,15 +1,15 @@
-import { useState, useEffect, useLayoutEffect, useContext } from "react";
+import { useEffect, useLayoutEffect, useContext } from "react";
 
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchPizzas } from "../redux/slices/pizzasSlice";
 import qs from 'qs';
 
 import { AppContext } from "../context/AppContext";
-import Categories from "../components/Categories"
-import Sort from "../components/Sort"
-import Skeleton from "../components/PizzaBlock/Skeleton"
-import PizzaBlock from "../components/PizzaBlock"
+import Categories from "../components/Categories";
+import Sort from "../components/Sort";
+import Skeleton from "../components/PizzaBlock/Skeleton";
+import PizzaBlock from "../components/PizzaBlock";
 import NotFoundBlock from "../components/NotFoundBlock";
 import Pagination from "../components/Pagination";
 
@@ -21,12 +21,12 @@ const serverUrl = 'https://666d611e7a3738f7cacc3aa7.mockapi.io';
 const limit = 8;
 
 export default function Home() {
-    const [isLoading, setIsLoading] = useState(true);
-    const [pizzas, setPizzas] = useState([]);
-
     const { searchInput } = useContext(AppContext);
+
+    const { items, isLoading } = useSelector(state => state.pizzas);
     const { category, sortType, page } = useSelector(state => state.filter);
 
+    const dispatch = useDispatch();
     const navigave = useNavigate();
 
     useLayoutEffect(() => {
@@ -34,8 +34,6 @@ export default function Home() {
     }, [category, sortType, page]);
 
     useEffect(() => {
-        setIsLoading(true);
-
         const url = new URL(`${serverUrl}/items`);
         if (category !== 0) url.searchParams.append('category', category);
         url.searchParams.append('sortBy', sortType.field);
@@ -44,14 +42,7 @@ export default function Home() {
         url.searchParams.append('limit', limit);
         if (searchInput) url.searchParams.append('search', searchInput); /* Warning: в mockApi не работает фильтрация по category и по search одновременно */
 
-        axios.get(url)
-            .then(response => {
-                setPizzas(response.data);
-            })
-            .catch(err => {
-                setPizzas([]);
-            })
-            .finally(() => setIsLoading(false));
+        dispatch(fetchPizzas(url));
     }, [category, sortType, page, searchInput]);
 
     useEffect(() => {
@@ -71,13 +62,13 @@ export default function Home() {
                 <Sort />
             </div>
             <h2 className="content__title">Все пиццы</h2>
-            {!isLoading && !pizzas.length
-                ? <NotFoundBlock text="К сожалению, таких пицц у нас нет..." />
+            {!isLoading && !items.length
+                ? <NotFoundBlock text={<span>К сожалению, не удалось получить питсы. <br />Попробуйте повторить попытку позже.</span>} />
                 : (
                     <div className="content__items">
                         {isLoading
                             ? Array(limit).fill(null).map((_, idx) => <Skeleton key={idx} />)
-                            : pizzas.map(pizza => <PizzaBlock key={pizza.id} {...pizza} />)
+                            : items.map(pizza => <PizzaBlock key={pizza.id} {...pizza} />)
                         }
                     </div>
                 )
