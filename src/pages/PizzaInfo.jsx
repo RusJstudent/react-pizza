@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import { serverUrl } from "./Home";
@@ -8,7 +8,9 @@ import { serverUrl } from "./Home";
 export default function PizzaInfo() {
     const [isLoading, setIsLoading] = useState(true);
     const [pizza, setPizza] = useState(null);
+
     const { id } = useParams();
+    const navigate = useNavigate();
 
     useEffect(() => {
         axios.get(`${serverUrl}/items/${id}`)
@@ -18,8 +20,9 @@ export default function PizzaInfo() {
             })
             .catch(err => {
                 alert('Ошибка при получении пиццы..');
+                navigate('/');
             })
-    }, []);
+    }, [id, navigate]);
 
     if (isLoading) {
         return (
@@ -32,9 +35,9 @@ export default function PizzaInfo() {
     return (
         <div className="container">
             <h2 className="content__title">Пицца</h2>
-            <div style={{ margin: '0 auto', textAlign: 'center', marginTop: 40, maxWidth: 350, paddingBottom: 15 }}>
-                <h3 style={{fontSize: 35, marginBottom: 20}}>{pizza.title}</h3>
-                <div style={{marginBottom: 30}}>
+            <div style={{ margin: '0 auto', textAlign: 'center', marginTop: 40, paddingBottom: 15 }}>
+                <h3 style={{ fontSize: 35, marginBottom: 20 }}>{pizza.title}</h3>
+                <div style={{ maxWidth: 350, margin: '0 auto 30px' }}>
                     <img style={{ width: '100%', marginRight: -12 }} src="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg" alt="pizza" />
                     <div style={{ textAlign: 'center', fontSize: 30 }}>
                         <span>Цена: </span>
