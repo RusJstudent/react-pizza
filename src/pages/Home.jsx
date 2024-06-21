@@ -1,11 +1,10 @@
-import { useEffect, useLayoutEffect, useContext } from "react";
+import { useEffect, useLayoutEffect } from "react";
 
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchPizzas } from "../redux/slices/pizzasSlice";
 import qs from 'qs';
 
-import { AppContext } from "../context/AppContext";
 import Categories from "../components/Categories";
 import Sort from "../components/Sort";
 import Skeleton from "../components/PizzaBlock/Skeleton";
@@ -21,10 +20,8 @@ const serverUrl = 'https://666d611e7a3738f7cacc3aa7.mockapi.io';
 const limit = 8;
 
 export default function Home() {
-    const { searchInput } = useContext(AppContext);
-
     const { items, isLoading } = useSelector(state => state.pizzas);
-    const { category, sortType, page } = useSelector(state => state.filter);
+    const { category, sortType, page, searchValue } = useSelector(state => state.filter);
 
     const dispatch = useDispatch();
     const navigave = useNavigate();
@@ -40,10 +37,10 @@ export default function Home() {
         url.searchParams.append('order', sortType.order);
         url.searchParams.append('page', page);
         url.searchParams.append('limit', limit);
-        if (searchInput) url.searchParams.append('search', searchInput); /* Warning: в mockApi не работает фильтрация по category и по search одновременно */
+        if (searchValue) url.searchParams.append('search', searchValue); /* Warning: в mockApi не работает фильтрация по category и по search одновременно */
 
         dispatch(fetchPizzas(url));
-    }, [category, sortType, page, searchInput]);
+    }, [category, sortType, page, searchValue]);
 
     useEffect(() => {
         const queryString = qs.stringify({

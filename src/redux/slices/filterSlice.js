@@ -3,6 +3,13 @@ import { sortTypes } from '../../components/Sort';
 import qs from 'qs';
 
 function getInitialState() {
+  let initialState = {
+    category: 0,
+    page: 1,
+    sortType: sortTypes[0],
+    searchValue: '',
+  };
+
   if (window.location.search) {
     const params = qs.parse(window.location.search.slice(1));
 
@@ -11,14 +18,10 @@ function getInitialState() {
       params[field] = Number(params[field]);
     }
 
-    return params;
+    initialState = {...initialState, ...params};
   }
 
-  return {
-    category: 0,
-    page: 1,
-    sortType: sortTypes[0],
-  };
+  return initialState;
 }
 
 const filterSlice = createSlice({
@@ -34,8 +37,11 @@ const filterSlice = createSlice({
     setPage(state, action) {
       state.page = action.payload;
     },
+    setSearchValue(state, action) {
+      state.searchValue = action.payload;
+    }
   },
 });
 
-export const { setCategory, setSortType, setPage } = filterSlice.actions;
+export const { setCategory, setSortType, setPage, setSearchValue } = filterSlice.actions;
 export default filterSlice.reducer;

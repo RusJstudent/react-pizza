@@ -1,14 +1,17 @@
-import { useContext, useState, useCallback } from 'react'
-import { AppContext } from '../../context/AppContext'
+import { useState, useCallback } from 'react'
+
+import { useDispatch } from 'react-redux';
+import { setSearchValue } from '../../redux/slices/filterSlice';
 
 import { debounce } from '../../util/debounce';
 
 import classes from './Search.module.scss'
 
 export default function Search() {
-    const [input, setInput] = useState(''); // local
-    const { setSearchInput } = useContext(AppContext); // global (debounced)
-    const updateSearchInput = useCallback(debounce(value => setSearchInput(value), 250), []);
+    const [input, setInput] = useState('');
+    
+    const dispatch = useDispatch();
+    const updateSearchInput = useCallback(debounce(value => dispatch(setSearchValue(value)), 250), []);
 
     function handleInputChange(value) {
         setInput(value);
