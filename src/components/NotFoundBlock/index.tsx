@@ -1,6 +1,10 @@
 import classes from './NotFoundBlock.module.scss';
 
-export default function NotFoundBlock({ text }) {
+type NotFoundBlockProps = {
+    text: string;
+}
+
+export default function NotFoundBlock({ text }: NotFoundBlockProps) {
     return (
         <div className={classes.root}>
             <h1>

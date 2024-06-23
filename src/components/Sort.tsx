@@ -3,22 +3,35 @@ import { useState, useEffect, useRef } from "react"
 import { useSelector, useDispatch } from "react-redux";
 import { setSortType } from "../redux/slices/filterSlice";
 
-export const sortTypes = [
+type SortType = {
+    name: string;
+    field: string;
+    order: 'asc' | 'desc';
+}
+
+export const sortTypes: SortType[] = [
     { name: 'популярности', field: 'rating', order: 'desc' },
     { name: 'цене 🠅', field: 'price', order: 'asc' },
     { name: 'цене 🠇', field: 'price', order: 'desc' },
     { name: 'алфавиту', field: 'title', order: 'asc' },
 ];
 
+/*
+TODO:
+    1. Fix: handleClick e has any type.
+    2. Fix: sortType => useSelector => state has any type.
+
+*/
+
 export default function Sort() {
     const [isOpen, setIsOpen] = useState(false);
     const sortRef = useRef(null);
     
     const dispatch = useDispatch();
-    const sortType = useSelector(state => state.filter.sortType);
+    const sortType = useSelector((state: any) => state.filter.sortType);
 
     useEffect(() => {
-        function handleClick(e) {
+        function handleClick(e: any) {
             if (e.target.contains(sortRef.current)) {
                 setIsOpen(false);
             }
@@ -29,7 +42,7 @@ export default function Sort() {
         return () => document.removeEventListener('click', handleClick);
     }, []);
 
-    function handleTypeChange(type) {
+    function handleTypeChange(type: SortType) {
         dispatch(setSortType(type));
         setIsOpen(false);
     }

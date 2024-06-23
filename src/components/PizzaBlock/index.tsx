@@ -6,7 +6,16 @@ import { addItem, selectItemsCountById } from '../../redux/slices/cartSlice';
 
 const typeNames = ['тонкое', 'традиционное'];
 
-export default function PizzaBlock({ title, price, imageUrl, sizes, types, id }) {
+type PizzaBlockProps = {
+    title: string;
+    price: number;
+    imageUrl: string;
+    sizes: number[];
+    types: number[];
+    id: string;
+}
+
+export default function PizzaBlock({ title, price, imageUrl, sizes, types, id }: PizzaBlockProps) {
     const [activeSize, setActiveSize] = useState(0);
     const [activeType, setActiveType] = useState(0);
 

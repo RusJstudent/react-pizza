@@ -1,7 +1,10 @@
-import React from "react"
 import ContentLoader from "react-content-loader"
 
-export default function Skeleton(props) { // react skeleton
+type SkeletonProps = {
+    [key: PropertyKey]: any;
+}
+
+export default function Skeleton(props: SkeletonProps) { // react skeleton
     return (
         <ContentLoader
             className="pizza-block"

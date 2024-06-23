@@ -8,6 +8,15 @@ import PizzaInfo from './pages/PizzaInfo';
 
 import "./scss/app.scss";
 
+/*
+TODO:
+    finish adding types in components:
+        1. Sort
+        2. Search
+
+    CartItem, PizzaBlock: типизировать item в другом месте
+*/
+
 export default function App() {
     return (
         <Routes>
