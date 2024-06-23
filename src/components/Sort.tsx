@@ -16,13 +16,6 @@ export const sortTypes: SortType[] = [
     { name: 'алфавиту', field: 'title', order: 'asc' },
 ];
 
-/*
-TODO:
-    1. Fix: handleClick e has any type.
-    2. Fix: sortType => useSelector => state has any type.
-
-*/
-
 export default function Sort() {
     const [isOpen, setIsOpen] = useState(false);
     const sortRef = useRef(null);
@@ -31,8 +24,8 @@ export default function Sort() {
     const sortType = useSelector((state: any) => state.filter.sortType);
 
     useEffect(() => {
-        function handleClick(e: any) {
-            if (e.target.contains(sortRef.current)) {
+        function handleClick(e: MouseEvent) {
+            if ((e.target as HTMLElement).contains(sortRef.current)) {
                 setIsOpen(false);
             }
         }

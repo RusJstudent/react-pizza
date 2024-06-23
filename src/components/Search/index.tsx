@@ -13,7 +13,7 @@ export default function Search() {
     const dispatch = useDispatch();
     const updateSearchInput = useCallback(debounce(value => dispatch(setSearchValue(value)), 250), []);
 
-    function handleInputChange(value: any) {
+    function handleInputChange(value: string) {
         setInput(value);
         updateSearchInput(value);
     }

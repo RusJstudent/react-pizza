@@ -10,9 +10,7 @@ import "./scss/app.scss";
 
 /*
 TODO:
-    finish adding types in components:
-        1. Sort
-        2. Search
+    Sort: типизировать (state in useSelector)
 
     CartItem, PizzaBlock: типизировать item в другом месте
 */
