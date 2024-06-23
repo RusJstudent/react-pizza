@@ -2,19 +2,9 @@ import { useState, useEffect } from "react";
 
 import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { IPizza } from "../redux/slices/pizzasSlice";
 
 import { serverUrl } from "./Home";
-
-interface IPizza {
-    id: string
-    imageUrl: string
-    title: string
-    types: number[]
-    sizes: number[]
-    price: number
-    category: number
-    rating: number
-}
 
 export default function PizzaInfo() {
     const [pizza, setPizza] = useState<IPizza>();

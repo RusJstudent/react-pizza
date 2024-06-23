@@ -9,7 +9,7 @@ export const fetchPizzas = createAsyncThunk(
     },
 );
 
-interface IPizza {
+export interface IPizza {
     id: string;
     imageUrl: string;
     title: string;

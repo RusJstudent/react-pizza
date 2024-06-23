@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react"
 
 import { useSelector, useDispatch } from "react-redux";
 import { SortType, setSortType } from "../redux/slices/filterSlice";
+import { RootState } from "../redux/store";
 
 export const sortTypes: SortType[] = [
     { name: 'популярности', field: 'rating', order: 'desc' },
@@ -15,7 +16,7 @@ export default function Sort() {
     const sortRef = useRef(null);
     
     const dispatch = useDispatch();
-    const sortType = useSelector((state: any) => state.filter.sortType);
+    const sortType = useSelector((state: RootState) => state.filter.sortType);
 
     useEffect(() => {
         function handleClick(e: MouseEvent) {

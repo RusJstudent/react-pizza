@@ -3,19 +3,11 @@ import { useState } from "react"
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { addItem, selectItemsCountById } from '../../redux/slices/cartSlice';
+import { IPizza } from "../../redux/slices/pizzasSlice";
 
 const typeNames = ['тонкое', 'традиционное'];
 
-type PizzaBlockProps = {
-    title: string;
-    price: number;
-    imageUrl: string;
-    sizes: number[];
-    types: number[];
-    id: string;
-}
-
-export default function PizzaBlock({ title, price, imageUrl, sizes, types, id }: PizzaBlockProps) {
+export default function PizzaBlock({ title, price, imageUrl, sizes, types, id }: IPizza) {
     const [activeSize, setActiveSize] = useState(0);
     const [activeType, setActiveType] = useState(0);
 

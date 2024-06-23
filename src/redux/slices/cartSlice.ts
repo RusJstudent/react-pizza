@@ -1,18 +1,20 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
+
+export interface ICartItem {
+    id: string;
+    title: string;
+    price: number;
+    imageUrl: string;
+    type: string;
+    size: number;
+    paramId: string;
+}
 
 interface ICartState {
     items: {
         [key: string]: {
-            item: {
-                id: string;
-                title: string;
-                price: number;
-                imageUrl: string;
-                type: string;
-                size: number;
-                paramId: string;
-            };
+            item: ICartItem
             count: number;
         }
     };
@@ -30,7 +32,7 @@ const cartSlice = createSlice({
     name: 'cart',
     initialState,
     reducers: {
-        addItem(state, action) {
+        addItem(state, action: PayloadAction<ICartItem>) {
             const key = action.payload.paramId;
             if (!(key in state.items)) {
                 state.items[key] = { item: action.payload, count: 0};
@@ -40,7 +42,7 @@ const cartSlice = createSlice({
             state.totalPrice += action.payload.price;
             state.totalCount++;
         },
-        removeItem(state, action) {
+        removeItem(state, action: PayloadAction<ICartItem>) {
             const key = action.payload.paramId;
             state.items[key].count--;
             if (state.items[key].count === 0) {
@@ -50,7 +52,7 @@ const cartSlice = createSlice({
             state.totalPrice -= action.payload.price;
             state.totalCount--;
         },
-        removeItems(state, action) {
+        removeItems(state, action: PayloadAction<ICartItem>) {
             const key = action.payload.paramId;
 
             state.totalCount -= state.items[key].count;
