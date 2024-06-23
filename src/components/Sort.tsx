@@ -1,13 +1,7 @@
 import { useState, useEffect, useRef } from "react"
 
 import { useSelector, useDispatch } from "react-redux";
-import { setSortType } from "../redux/slices/filterSlice";
-
-type SortType = {
-    name: string;
-    field: string;
-    order: 'asc' | 'desc';
-}
+import { SortType, setSortType } from "../redux/slices/filterSlice";
 
 export const sortTypes: SortType[] = [
     { name: 'популярности', field: 'rating', order: 'desc' },

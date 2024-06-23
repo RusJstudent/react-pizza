@@ -1,10 +1,11 @@
+import { ReactElement } from 'react';
 import classes from './NotFoundBlock.module.scss';
 
 type NotFoundBlockProps = {
-    text: string;
+    content: ReactElement;
 }
 
-export default function NotFoundBlock({ text }: NotFoundBlockProps) {
+export default function NotFoundBlock({ content }: NotFoundBlockProps) {
     return (
         <div className={classes.root}>
             <h1>
@@ -12,7 +13,7 @@ export default function NotFoundBlock({ text }: NotFoundBlockProps) {
                 <br />
                 Ничего не найдено
             </h1>
-            <p className={classes.description}>{text}</p>
+            <p className={classes.description}>{content}</p>
         </div>
     )
 };

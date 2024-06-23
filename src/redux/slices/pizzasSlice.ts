@@ -3,13 +3,29 @@ import axios from "axios";
 
 export const fetchPizzas = createAsyncThunk(
     'pizzas/fetchPizzasItems',
-    async (url) => {
+    async (url: string) => {
         const { data } = await axios.get(url);
         return data;
     },
 );
 
-const initialState = {
+interface IPizza {
+    id: string;
+    imageUrl: string;
+    title: string;
+    types: number[];
+    sizes: number[];
+    price: number;
+    category: number;
+    rating: number;
+}
+
+interface IPizzasState {
+    items: IPizza[];
+    isLoading: boolean;
+}
+
+const initialState: IPizzasState = {
     items: [],
     isLoading: false,
 };

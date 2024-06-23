@@ -2,8 +2,21 @@ import { createSlice } from '@reduxjs/toolkit'
 import { sortTypes } from '../../components/Sort';
 import qs from 'qs';
 
+export type SortType = {
+  name: string;
+  field: 'rating' | 'price' | 'title';
+  order: 'asc' | 'desc';
+}
+
+interface IFilterState {
+  category: number;
+  page: number;
+  sortType: SortType;
+  searchValue: string;
+}
+
 function getInitialState() {
-  let initialState = {
+  let initialState: IFilterState = {
     category: 0,
     page: 1,
     sortType: sortTypes[0],
@@ -15,10 +28,10 @@ function getInitialState() {
 
     for (let field in params) {
       if (typeof params[field] !== 'string') continue;
-      params[field] = Number(params[field]);
+      params[field] = Number(params[field]) as any;
     }
 
-    initialState = {...initialState, ...params};
+    initialState = { ...initialState, ...params };
   }
 
   return initialState;

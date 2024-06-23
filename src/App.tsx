@@ -12,7 +12,7 @@ import "./scss/app.scss";
 TODO:
     Sort: типизировать (state in useSelector)
 
-    CartItem, PizzaBlock: типизировать item в другом месте
+    CartItem, PizzaBlock, PizzaInfo: типизировать item в другом месте
 */
 
 export default function App() {

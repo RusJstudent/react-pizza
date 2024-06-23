@@ -3,6 +3,7 @@ import { useEffect, useLayoutEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchPizzas } from "../redux/slices/pizzasSlice";
+import { RootState } from "../redux/store";
 import qs from 'qs';
 
 import Categories from "../components/Categories";
@@ -20,8 +21,8 @@ export const serverUrl = 'https://666d611e7a3738f7cacc3aa7.mockapi.io';
 const limit = 8;
 
 export default function Home() {
-    const { items, isLoading } = useSelector(state => state.pizzas);
-    const { category, sortType, page, searchValue } = useSelector(state => state.filter);
+    const { items, isLoading } = useSelector((state: RootState) => state.pizzas);
+    const { category, sortType, page, searchValue } = useSelector((state: RootState) => state.filter);
 
     const dispatch = useDispatch();
     const navigave = useNavigate();
@@ -32,13 +33,14 @@ export default function Home() {
 
     useEffect(() => {
         const url = new URL(`${serverUrl}/items`);
-        if (category !== 0) url.searchParams.append('category', category);
+        if (category !== 0) url.searchParams.append('category', String(category));
         url.searchParams.append('sortBy', sortType.field);
         url.searchParams.append('order', sortType.order);
-        url.searchParams.append('page', page);
-        url.searchParams.append('limit', limit);
+        url.searchParams.append('page', String(page));
+        url.searchParams.append('limit', String(limit));
         if (searchValue) url.searchParams.append('search', searchValue); /* Warning: в mockApi не работает фильтрация по category и по search одновременно */
 
+        // @ts-ignore
         dispatch(fetchPizzas(url));
     }, [category, sortType, page, searchValue]);
 
@@ -60,7 +62,7 @@ export default function Home() {
             </div>
             <h2 className="content__title">Все пиццы</h2>
             {!isLoading && !items.length
-                ? <NotFoundBlock text={<span>К сожалению, не удалось получить питсы. <br />Попробуйте повторить попытку позже.</span>} />
+                ? <NotFoundBlock content={<span>К сожалению, не удалось получить питсы. <br />Попробуйте повторить попытку позже.</span>} />
                 : (
                     <div className="content__items">
                         {isLoading
