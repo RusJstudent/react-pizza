@@ -1,7 +1,11 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
-export interface ICartItem {
+function updateLocalStorage(state: ICartState) {
+    localStorage.setItem('cart', JSON.stringify(state));
+}
+
+export type ICartItem = {
     id: string;
     title: string;
     price: number;
@@ -22,15 +26,25 @@ interface ICartState {
     totalPrice: number;
 }
 
-const initialState: ICartState = {
-    items: {},
-    totalCount: 0,
-    totalPrice: 0,
-};
+function getInitialState(): ICartState {
+    const initialState =  {
+        items: {},
+        totalCount: 0,
+        totalPrice: 0,
+    };
+
+    const localStorageCart = localStorage.getItem('cart');
+
+    if (localStorageCart) {
+        return JSON.parse(localStorageCart);
+    }
+
+    return initialState;
+}
 
 const cartSlice = createSlice({
     name: 'cart',
-    initialState,
+    initialState: getInitialState(),
     reducers: {
         addItem(state, action: PayloadAction<ICartItem>) {
             const key = action.payload.paramId;
@@ -41,6 +55,8 @@ const cartSlice = createSlice({
 
             state.totalPrice += action.payload.price;
             state.totalCount++;
+
+            updateLocalStorage(state);
         },
         removeItem(state, action: PayloadAction<ICartItem>) {
             const key = action.payload.paramId;
@@ -51,6 +67,8 @@ const cartSlice = createSlice({
 
             state.totalPrice -= action.payload.price;
             state.totalCount--;
+
+            updateLocalStorage(state);
         },
         removeItems(state, action: PayloadAction<ICartItem>) {
             const key = action.payload.paramId;
@@ -59,11 +77,15 @@ const cartSlice = createSlice({
             state.totalPrice -= state.items[key].count * state.items[key].item.price;
 
             delete state.items[key];
+
+            updateLocalStorage(state);
         },
         clearItems(state) {
             state.items = {};
             state.totalPrice = 0;
             state.totalCount = 0;
+
+            updateLocalStorage(state);
         },
     }
 });
