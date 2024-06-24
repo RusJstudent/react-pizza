@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef, memo } from "react"
 
 import { useSelector, useDispatch } from "react-redux";
-import { SortType, setSortType } from "../redux/slices/filterSlice";
+import { setSortType } from "../redux/filter/slice";
+import { SortType } from "../redux/filter/types";
 import { RootState } from "../redux/store";
 
 export const sortTypes: SortType[] = [
@@ -14,7 +15,7 @@ export const sortTypes: SortType[] = [
 export default memo(function Sort() {
     const [isOpen, setIsOpen] = useState(false);
     const sortRef = useRef(null);
-    
+
     const dispatch = useDispatch();
     const sortType = useSelector((state: RootState) => state.filter.sortType);
 

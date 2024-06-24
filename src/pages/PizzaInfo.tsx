@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { IPizza } from "../redux/slices/pizzasSlice";
+import { IPizza } from "../redux/pizzas/types";
 
 import { serverUrl } from "./Home";
 

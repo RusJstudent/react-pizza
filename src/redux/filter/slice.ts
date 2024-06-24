@@ -2,18 +2,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { sortTypes } from '../../components/Sort';
 import qs from 'qs';
 
-export type SortType = {
-  name: string;
-  field: 'rating' | 'price' | 'title';
-  order: 'asc' | 'desc';
-}
-
-interface IFilterState {
-  category: string;
-  page: string;
-  sortType: SortType;
-  searchValue: string;
-}
+import { IFilterState } from './types';
 
 function getInitialState() {
   let initialState: IFilterState = {

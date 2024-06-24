@@ -5,7 +5,7 @@ import logoSvg from '../assets/img/pizza-logo.svg';
 import Search from './Search';
 
 import { useSelector } from 'react-redux';
-import { selectCart } from '../redux/slices/cartSlice';
+import { selectCart } from '../redux/cart/selectors';
 
 export default function Header() {
     let isMounted = useRef(false);

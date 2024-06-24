@@ -4,7 +4,8 @@ import CartItem from "../components/CartItem";
 import CartEmpty from "../components/CartEmpty";
 
 import { useSelector, useDispatch } from "react-redux";
-import { clearItems, selectCart } from "../redux/slices/cartSlice";
+import { selectCart } from "../redux/cart/selectors";
+import { clearItems } from "../redux/cart/slice";
 
 export default function Cart() {
     const dispatch = useDispatch();

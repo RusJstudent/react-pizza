@@ -2,8 +2,9 @@ import { useState } from "react"
 
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { addItem, selectItemsCountById } from '../../redux/slices/cartSlice';
-import { IPizza } from "../../redux/slices/pizzasSlice";
+import { addItem } from '../../redux/cart/slice';
+import { selectItemsCountById } from '../../redux/cart/selectors';
+import { IPizza } from "../../redux/pizzas/types";
 
 const typeNames = ['тонкое', 'традиционное'];
 

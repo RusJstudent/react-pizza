@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { IPizzasState, IPizza } from "./types";
 
 export const fetchPizzas = createAsyncThunk<IPizza[], string>(
     'pizzas/fetchPizzasItems',
@@ -8,22 +9,6 @@ export const fetchPizzas = createAsyncThunk<IPizza[], string>(
         return data;
     },
 );
-
-export interface IPizza {
-    id: string;
-    imageUrl: string;
-    title: string;
-    types: number[];
-    sizes: number[];
-    price: number;
-    category: number;
-    rating: number;
-}
-
-interface IPizzasState {
-    items: IPizza[];
-    isLoading: boolean;
-}
 
 const initialState: IPizzasState = {
     items: [],

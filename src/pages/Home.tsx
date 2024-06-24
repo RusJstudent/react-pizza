@@ -2,7 +2,7 @@ import { useEffect, useLayoutEffect } from "react";
 
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { fetchPizzas } from "../redux/slices/pizzasSlice";
+import { fetchPizzas } from "../redux/pizzas/slice";
 import { RootState, useAppDispatch } from "../redux/store";
 import qs from 'qs';
 

@@ -1,26 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { RootState } from "../store";
-
-export type ICartItem = {
-    id: string;
-    title: string;
-    price: number;
-    imageUrl: string;
-    type: string;
-    size: number;
-    paramId: string;
-}
-
-interface ICartState {
-    items: {
-        [key: string]: {
-            item: ICartItem
-            count: number;
-        }
-    };
-    totalCount: number;
-    totalPrice: number;
-}
+import { ICartItem, ICartState } from "./types";
 
 function getInitialState(): ICartState {
     const localStorageCart = localStorage.getItem('cart');
@@ -76,17 +55,5 @@ const cartSlice = createSlice({
     }
 });
 
-export const selectItemsCountById = (id: string) => {
-    return (state: RootState) => {
-        return Object.values(state.cart.items).reduce((acc, items) => {
-            if (items.item.id === id) {
-                return acc + items.count;
-            }
-
-            return acc;
-        }, 0);
-    }
-};
-export const selectCart = (state: RootState) => state.cart;
 export const { addItem, removeItem, clearItems, removeItems } = cartSlice.actions;
 export default cartSlice.reducer;
