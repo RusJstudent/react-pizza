@@ -14,8 +14,8 @@ export default function Categories() {
                 {categories.map((name, idx) => (
                     <li
                         key={idx}
-                        className={category === idx ? 'active' : ''}
-                        onClick={() => dispatch(setCategory(idx))}
+                        className={category === String(idx) ? 'active' : ''}
+                        onClick={() => dispatch(setCategory(String(idx)))}
                     >
                         {name}
                     </li>

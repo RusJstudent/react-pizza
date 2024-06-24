@@ -15,7 +15,7 @@ export default function Pagination() {
                 breakLabel="..."
                 previousLabel="<"
                 nextLabel=">"
-                onPageChange={obj => dispatch(setPage(obj.selected + 1))}
+                onPageChange={obj => dispatch(setPage(String(obj.selected + 1)))}
                 pageRangeDisplayed={8}
                 pageCount={2}
                 renderOnZeroPageCount={null}

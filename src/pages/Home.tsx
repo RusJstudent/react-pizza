@@ -1,9 +1,9 @@
 import { useEffect, useLayoutEffect } from "react";
 
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { fetchPizzas } from "../redux/slices/pizzasSlice";
-import { RootState } from "../redux/store";
+import { RootState, useAppDispatch } from "../redux/store";
 import qs from 'qs';
 
 import Categories from "../components/Categories";
@@ -24,7 +24,7 @@ export default function Home() {
     const { items, isLoading } = useSelector((state: RootState) => state.pizzas);
     const { category, sortType, page, searchValue } = useSelector((state: RootState) => state.filter);
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const navigave = useNavigate();
 
     useLayoutEffect(() => {
@@ -33,15 +33,14 @@ export default function Home() {
 
     useEffect(() => {
         const url = new URL(`${serverUrl}/items`);
-        if (category !== 0) url.searchParams.append('category', String(category));
+        if (category !== '0') url.searchParams.append('category', String(category));
         url.searchParams.append('sortBy', sortType.field);
         url.searchParams.append('order', sortType.order);
         url.searchParams.append('page', String(page));
         url.searchParams.append('limit', String(limit));
         if (searchValue) url.searchParams.append('search', searchValue); /* Warning: в mockApi не работает фильтрация по category и по search одновременно */
 
-        // @ts-ignore
-        dispatch(fetchPizzas(url));
+        dispatch(fetchPizzas(url.href));
     }, [category, sortType, page, searchValue]);
 
     useEffect(() => {

@@ -8,12 +8,6 @@ import PizzaInfo from './pages/PizzaInfo';
 
 import "./scss/app.scss";
 
-/*
-TODO:
-    Возможно, больше не получится типизировать:
-    CartItem, PizzaInfo
-*/
-
 export default function App() {
     return (
         <Routes>

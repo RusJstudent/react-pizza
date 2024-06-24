@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { sortTypes } from '../../components/Sort';
 import qs from 'qs';
 
@@ -9,27 +9,22 @@ export type SortType = {
 }
 
 interface IFilterState {
-  category: number;
-  page: number;
+  category: string;
+  page: string;
   sortType: SortType;
   searchValue: string;
 }
 
 function getInitialState() {
   let initialState: IFilterState = {
-    category: 0,
-    page: 1,
+    category: '0',
+    page: '1',
     sortType: sortTypes[0],
     searchValue: '',
   };
 
   if (window.location.search) {
     const params = qs.parse(window.location.search.slice(1));
-
-    for (let field in params) {
-      if (typeof params[field] !== 'string') continue;
-      params[field] = Number(params[field]) as any;
-    }
 
     initialState = { ...initialState, ...params };
   }
@@ -41,16 +36,16 @@ const filterSlice = createSlice({
   name: 'filter',
   initialState: getInitialState(),
   reducers: {
-    setCategory(state, action) {
+    setCategory(state, action: PayloadAction<IFilterState['category']>) {
       state.category = action.payload;
     },
-    setSortType(state, action) {
+    setSortType(state, action: PayloadAction<IFilterState['sortType']>) {
       state.sortType = action.payload;
     },
-    setPage(state, action) {
+    setPage(state, action: PayloadAction<IFilterState['page']>) {
       state.page = action.payload;
     },
-    setSearchValue(state, action) {
+    setSearchValue(state, action: PayloadAction<IFilterState['searchValue']>) {
       state.searchValue = action.payload;
     }
   },
