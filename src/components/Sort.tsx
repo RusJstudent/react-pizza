@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, memo } from "react"
 
 import { useSelector, useDispatch } from "react-redux";
 import { SortType, setSortType } from "../redux/slices/filterSlice";
@@ -11,7 +11,7 @@ export const sortTypes: SortType[] = [
     { name: 'алфавиту', field: 'title', order: 'asc' },
 ];
 
-export default function Sort() {
+export default memo(function Sort() {
     const [isOpen, setIsOpen] = useState(false);
     const sortRef = useRef(null);
     
@@ -70,4 +70,4 @@ export default function Sort() {
             )}
         </div>
     )
-};
+});
