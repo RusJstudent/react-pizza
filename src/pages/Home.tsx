@@ -6,12 +6,7 @@ import { fetchPizzas } from "../redux/pizzas/slice";
 import { RootState, useAppDispatch } from "../redux/store";
 import qs from 'qs';
 
-import Categories from "../components/Categories";
-import Sort from "../components/Sort";
-import Skeleton from "../components/PizzaBlock/Skeleton";
-import PizzaBlock from "../components/PizzaBlock";
-import NotFoundBlock from "../components/NotFoundBlock";
-import Pagination from "../components/Pagination";
+import { Categories, Sort, Skeleton, PizzaBlock, NotFoundBlock, Pagination } from '../components';
 
 /* Альтернативный, но менее удобный способ использования параметров поиска в url:
     const url = `${serverUrl}/items?${category === 0 ? '' : `category=${category}`}&sortBy=${sortType.field}&order=${sortType.order}`; 
